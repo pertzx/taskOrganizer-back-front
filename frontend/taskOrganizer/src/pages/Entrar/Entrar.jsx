@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = 'https://task-organizer-api.vercel.app'; // URL do seu backend
+const API_URL = process.env.REACT_APP_API_URL; // URL do seu backend
 
 function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
   const [user, setUser] = useState('');
