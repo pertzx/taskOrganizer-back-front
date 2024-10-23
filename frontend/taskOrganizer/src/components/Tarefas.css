@@ -1,0 +1,20 @@
+.show{
+    animation: show ease-in 3100ms;
+}
+
+@keyframes show {
+    0%{
+        opacity: 0%;
+    }
+    10%{
+        opacity: 100%;
+    }
+    90%{
+        opacity: 100%;
+    }
+    100%{
+        opacity: 0%;
+    }
+}
+
+

@@ -12,8 +12,7 @@ function App() {
 
   const renderRoute = () => {
     if (logado) {
-      console.log(dados.user)
-      return <Inicio username={username} tarefasArray={dados.user}/>;
+      return <Inicio username={username} userDados={dados.user}/>;
     } else {
       if (precisoRegistrar) {
         return <Cadastrar setPrecisoRegistrar={setPrecisoRegistrar} setDados={setDados}/>;

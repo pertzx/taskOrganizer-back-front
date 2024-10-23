@@ -1,18 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const PORT = process.env.PORT || 5000;
+require('dotenv').config();
 
 const app = express();
 app.use(express.json()); // Para permitir JSON no corpo das requisições
 app.use(cors());
 
 // Conectar ao MongoDB
-mongoose.connect('mongodb+srv://pyerre:familia321p@cluster0.zr8u0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect(process.env.DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -84,12 +82,131 @@ app.post('/entrar', async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, 'secret', { expiresIn: '1h' });
-    res.json({ token, username, password, logado: true, user});
+    res.json({ token, username, password, logado: true, user });
   } catch (err) {
     res.status(500).json({ message: 'Erro ao realizar login' });
   }
 });
 
-app.listen(PORT, () => {
+// Rota para buscar tarefas
+app.get('/tarefas/:username', async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+    res.json({ tasks: user.tasks });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao buscar tarefas' });
+  }
+});
+
+
+// rota pra adicionar tarefa
+app.post('/adicionar-tarefa', async (req, res) => {
+  const { username, title, description } = req.body;
+  const user = await User.findOne({ username });
+  var mensagem;
+
+  if (!user) {
+    mensagem = 'Server-side error';
+    return res.json({ mensagem });
+  }
+  if (!title || !description) {
+    mensagem = 'Please enter data';
+    return res.json({ mensagem });
+  } else {
+    try {
+      const novaTarefa = {
+        title,
+        description,
+        completed: false // a tarefa inicia como não concluída!
+      };
+
+      mensagem = '';
+      user.tasks.push(novaTarefa);
+
+      await user.save();
+      console.log(user.tasks);
+      // Retorna a nova tarefa
+      res.json({ username, logado: true, mensagem, task: novaTarefa });
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao adicionar a tarefa' });
+    }
+  }
+});
+
+//rota pra editar a tarefa!
+app.post('/editar-tarefa', async (req, res) => {
+  const { username, title, description, index } = req.body;
+  console.log({ username, title, description, index }); // Verifique o que está sendo recebido
+
+  if(!title){
+    return res.status(400).json({message: 'O titulo é obrigatorio!'})
+  }
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    console.log(user.tasks); // Verifique as tarefas existentes
+    
+    // Certifique-se de que o índice seja válido
+    if (index < 0 || index >= user.tasks.length) {
+      return res.status(400).json({ message: 'Índice de tarefa inválido' });
+    }
+
+    // Atualize a tarefa com o novo título e descrição
+    user.tasks[index] = { title, description };
+    await user.save();
+
+    const editedTask = user.tasks[index];
+
+    const message = {
+      good: true,
+      mess: 'Tarefa editada com sucesso' 
+    };
+    
+    res.json({ task: editedTask, message });
+  } catch (error) {
+    console.error(error); // Log do erro detalhado
+    res.status(500).json({ message: 'Erro ao editar tarefa', error: error.message });
+  }
+});
+
+// Rota para deletar uma tarefa
+app.delete('/deletar-tarefa/:username/:index', async (req, res) => {
+  const { username, index } = req.params;
+
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado' });
+    }
+
+    if (index < 0 || index >= user.tasks.length) {
+      return res.status(400).json({ message: 'Índice de tarefa inválido' });
+    }
+
+    // Remove a tarefa do array usando splice
+    user.tasks.splice(index, 1); 
+
+    await user.save();
+    res.json({ message: 'Tarefa deletada com sucesso' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erro ao deletar tarefa' });
+  }
+});
+
+
+
+
+
+
+app.listen(5000, () => {
   console.log('Servidor rodando na porta 5000');
 });

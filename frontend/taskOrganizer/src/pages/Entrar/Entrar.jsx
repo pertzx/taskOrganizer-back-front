@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL; // URL do seu backend
+const API_URL = 'http://localhost:5000'; // URL do seu backend
 
 function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
   const [user, setUser] = useState('');
@@ -20,11 +20,12 @@ function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
       const response = await axios.post(`${API_URL}/entrar`, { username: user, password });
       const dados = response.data;
       setDados(dados);
-      if(dados.logado){
-        setLogado(true)
-        setUsername(dados.username)
+      console.log(dados);
+      if (dados.logado) {
+        setLogado(true);
+        setUsername(dados.username);
       }
-      console.log('Login realizado com sucesso:', response.data);
+      console.log('Login realizado com sucesso:');
       localStorage.setItem('token', response.data.token);
     } catch (error) {
       if (error.response) {
@@ -42,8 +43,8 @@ function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
 
   return (
     <div className='w-full h-screen flex items-center justify-center'>
-      <form onSubmit={entrarF} className='border-2 rounded-md w-1/3 py-2 px-4'>
-        <h2 className='font-semibold text-3xl w-full text-center text-blue-500 my-2'>Entrar</h2>
+      <form onSubmit={entrarF} className='border-2 rounded-md w-11/12 sm:w-1/3 py-4 px-4'>
+        <h2 className='font-semibold text-3xl w-full text-center text-white mb-4'>Entrar</h2>
 
         <input
           type="text"
@@ -61,7 +62,7 @@ function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
           className='w-full outline-none border text-blue-500 hover:bg-blue-100 focus:border-blue-500 hover:placeholder-blue-900 hover:text-blue-900 rounded-md px-2 py-1 mb-2'
         />
 
-        <a onClick={() => setPrecisoRegistrar(true)} className='text-sm justify-center flex w-full text-blue-500 mb-2 hover:text-blue-600 cursor-pointer focus:font-semibold'>
+        <a onClick={() => setPrecisoRegistrar(true)} className='text-sm justify-center flex w-full text-slate-100 mb-2 hover:text-slate-300 cursor-pointer focus:font-semibold hover:underline'>
           Don't have an account? Register
         </a>
 
@@ -71,7 +72,9 @@ function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
           </p>
         )}
 
-        <button type='submit' className='w-full rounded-md bg-blue-500 p-1 font-bold text-white mb-2'>Entrar</button>
+        <button type='submit' className='w-full rounded-md bg-blue-500 p-2 font-bold text-white mb-2'>
+          Entrar
+        </button>
       </form>
     </div>
   );

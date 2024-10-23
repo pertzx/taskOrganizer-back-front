@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL; // URL do seu backend
+const API_URL = 'http://localhost:5000'; // URL do seu backend
 
 function Cadastrar({ setPrecisoRegistrar, setDados }) {
   const [user, setUser] = useState('');
@@ -37,8 +37,8 @@ function Cadastrar({ setPrecisoRegistrar, setDados }) {
 
   return (
     <div className='w-full h-screen flex items-center justify-center'>
-      <form onSubmit={cadastrarF} className='border-2 rounded-md w-1/3 py-2 px-4'>
-        <h2 className='font-semibold text-3xl w-full text-center text-blue-500 my-2'>Cadastrar</h2>
+      <form onSubmit={cadastrarF} className='border-2 rounded-md w-11/12 sm:w-1/3 py-4 px-4'>
+        <h2 className='font-semibold text-3xl w-full text-center text-white mb-4'>Cadastrar</h2>
 
         <input
           type="text"
@@ -56,7 +56,7 @@ function Cadastrar({ setPrecisoRegistrar, setDados }) {
           className='w-full outline-none border text-blue-500 hover:bg-blue-100 focus:border-blue-500 hover:placeholder-blue-900 hover:text-blue-900 rounded-md px-2 py-1 mb-2'
         />
 
-        <a onClick={() => setPrecisoRegistrar(false)} className='text-sm justify-center flex w-full text-blue-500 mb-2 hover:text-blue-600 cursor-pointer focus:font-semibold'>
+        <a onClick={() => setPrecisoRegistrar(false)} className='text-sm justify-center flex w-full text-slate-100 mb-2 hover:text-slate-300 cursor-pointer focus:font-semibold hover:underline'>
           Do you have an account? Connect
         </a>
 
@@ -66,7 +66,7 @@ function Cadastrar({ setPrecisoRegistrar, setDados }) {
           </p>
         )}
 
-        <button type='submit' className='w-full rounded-md bg-blue-500 p-1 font-bold text-white mb-2'>Cadastrar</button>
+        <button type='submit' className='w-full rounded-md bg-blue-500 p-2 font-bold text-white mb-2'>Cadastrar</button>
       </form>
     </div>
   );
