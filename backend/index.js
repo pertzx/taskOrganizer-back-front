@@ -9,6 +9,8 @@ const app = express();
 app.use(express.json()); // Para permitir JSON no corpo das requisições
 app.use(cors());
 
+const port = process.env.PORT || 5000;
+
 // Conectar ao MongoDB
 mongoose.connect(process.env.DB, {
   useNewUrlParser: true,
@@ -207,6 +209,6 @@ app.delete('/deletar-tarefa/:username/:index', async (req, res) => {
 
 
 
-app.listen(5000, () => {
-  console.log('Servidor rodando na porta 5000');
+app.listen(port, () => {
+  console.log('Servidor rodando na porta '+ port);
 });
