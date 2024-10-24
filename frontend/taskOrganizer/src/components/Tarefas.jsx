@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Tarefas.css';
 import DeleteIcon from '/DeleteIcon.svg';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://api-taskorganizer.vercel.app';
 
 function Tarefas({ userDados, pesquisa }) {
     const [title, setTitle] = useState('');
@@ -132,7 +132,7 @@ function Tarefas({ userDados, pesquisa }) {
         <div className='w-full p-5 text-sky-900 flex flex-col items-center'>
             <div className="flex flex-wrap justify-center">
                 {tarefasFiltradas.map((tarefa, index) => (
-                    <form onSubmit={(e) => editarTarefa(index, e)} key={tarefa.id || index} className='relative flex flex-col border-2 items-center bg-blue-200 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-h-60 p-2 m-2 rounded-lg'>
+                    <form onSubmit={(e) => editarTarefa(index, e)} key={tarefa.id || index} className='relative flex flex-col border-2 items-center bg-blue-200 w-full sm:w-1/2 sm:mx-5 md:w-1/3 lg:w-1/4 min-h-60 p-2 m-3 rounded-lg'>
                         <label>Tarefa:</label>
                         <input
                             type="text"
@@ -203,7 +203,7 @@ function Tarefas({ userDados, pesquisa }) {
                     </form>
                 ))}
 
-                <form onSubmit={adicionarTarefa} className="flex flex-col border-2 items-center bg-slate-200 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-w-52 min-h-60 p-2 m-2 rounded-lg">
+                <form onSubmit={adicionarTarefa} className="flex flex-col border-2 items-center bg-slate-200 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 min-w-64 md:min-h-32 min-h-60 p-2 m-2 rounded-lg">
                     <h2 className='font-semibold text-2xl text-blue-600'>Adicionar Tarefa</h2>
                     <input
                         type="text"

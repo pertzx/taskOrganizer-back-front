@@ -21,6 +21,9 @@ function Inicio({ username, userDados }) {
                 </div>
             </div>
             <Tarefas userDados={userDados} pesquisa={pesquisa} />
+            <div className='font-light text-slate-100 my-4 w-full text-center'>
+                created by <span className='font-semibold'>Pyerre/P3rtzX</span><a href="https://github.com/pertzx" target='_blank'> Github for more details</a>
+            </div>
         </>
     );
 }

@@ -34,6 +34,10 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
+app.get('/', (req, res) => {
+  res.end('Hello World teste!')
+})
+
 // Rota de Cadastro (POST /cadastrar)
 app.post('/cadastrar', async (req, res) => {
   const { username, password } = req.body;
