@@ -43,18 +43,22 @@ function Cadastrar({ setPrecisoRegistrar, setDados }) {
         <input
           type="text"
           name='user'
-          onChange={(e) => setUser(e.target.value)}
+          onChange={(e) => {
+            var lowerUser = (e.target.value).toLowerCase();
+            setUser(lowerUser)
+          }}
           placeholder='User'
           className='w-full outline-none border text-blue-500 hover:bg-blue-100 focus:border-blue-500 hover:placeholder-blue-900 hover:text-blue-900 rounded-md px-2 py-1 mb-2'
         />
 
-        <input
-          type="password"
-          name='password'
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder='Password'
-          className='w-full outline-none border text-blue-500 hover:bg-blue-100 focus:border-blue-500 hover:placeholder-blue-900 hover:text-blue-900 rounded-md px-2 py-1 mb-2'
-        />
+        <textarea 
+        type="password"
+        name='password'
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder='Password'
+        maxLength={230}
+        className='w-full max-h-32 min-h-24 outline-none border text-blue-500 hover:bg-blue-100 focus:border-blue-500 hover:placeholder-blue-900 hover:text-blue-900 rounded-md px-2 py-1 mb-2'
+        ></textarea>
 
         <a onClick={() => setPrecisoRegistrar(false)} className='text-sm justify-center flex w-full text-slate-100 mb-2 hover:text-slate-300 cursor-pointer focus:font-semibold hover:underline'>
           Do you have an account? Connect

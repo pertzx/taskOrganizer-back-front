@@ -49,7 +49,10 @@ function Entrar({ setPrecisoRegistrar, setLogado, setUsername, setDados }) {
         <input
           type="text"
           name='user'
-          onChange={(e) => setUser(e.target.value)}
+          onChange={(e) => {
+            var lowerUser = (e.target.value).toLowerCase();
+            setUser(lowerUser)
+          }}
           placeholder='User'
           className='w-full outline-none border text-blue-500 hover:bg-blue-100 focus:border-blue-500 hover:placeholder-blue-900 hover:text-blue-900 rounded-md px-2 py-1 mb-2'
         />
